@@ -1,0 +1,388 @@
+{
+  "id": "de.vevor.weatherstation",
+  "version": "1.0.0",
+  "compatibility": ">=12.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Vevor Weather Station",
+    "de": "Vevor Wetterstation"
+  },
+  "description": {
+    "en": "Integrate your Vevor YT60307 weather station into Homey. Get all sensor data including indoor/outdoor temperature, humidity, wind speed, wind direction, rainfall, pressure, UV index, light intensity and pool temperature.",
+    "de": "Integriere deine Vevor YT60307 Wetterstation in Homey. Alle Sensordaten verfügbar: Innen-/Außentemperatur, Luftfeuchtigkeit, Windgeschwindigkeit, Windrichtung, Niederschlag, Luftdruck, UV-Index, Lichtstärke und Pooltemperatur."
+  },
+  "category": [
+    "climate"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png"
+  },
+  "author": {
+    "name": "Homey User",
+    "email": "user@example.com"
+  },
+  "drivers": [
+    {
+      "id": "vevor_yt60307",
+      "name": {
+        "en": "Vevor YT60307",
+        "de": "Vevor YT60307"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_temperature",
+        "measure_temperature.outdoor",
+        "measure_humidity",
+        "measure_humidity.outdoor",
+        "measure_wind_strength",
+        "measure_wind_angle",
+        "wind_direction_text",
+        "measure_rain",
+        "measure_pressure",
+        "measure_ultraviolet",
+        "measure_luminance",
+        "measure_temperature.pool"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Indoor Temperature",
+            "de": "Innentemperatur"
+          }
+        },
+        "measure_temperature.outdoor": {
+          "title": {
+            "en": "Outdoor Temperature",
+            "de": "Außentemperatur"
+          }
+        },
+        "measure_humidity": {
+          "title": {
+            "en": "Indoor Humidity",
+            "de": "Innenluftfeuchtigkeit"
+          }
+        },
+        "measure_humidity.outdoor": {
+          "title": {
+            "en": "Outdoor Humidity",
+            "de": "Außenluftfeuchtigkeit"
+          }
+        },
+        "measure_wind_strength": {
+          "title": {
+            "en": "Wind Speed",
+            "de": "Windgeschwindigkeit"
+          }
+        },
+        "measure_wind_angle": {
+          "title": {
+            "en": "Wind Direction",
+            "de": "Windrichtung"
+          },
+          "units": {
+            "en": "°"
+          }
+        },
+        "measure_rain": {
+          "title": {
+            "en": "Rainfall",
+            "de": "Niederschlag"
+          },
+          "units": {
+            "en": "mm"
+          }
+        },
+        "measure_pressure": {
+          "title": {
+            "en": "Barometric Pressure",
+            "de": "Luftdruck"
+          }
+        },
+        "measure_ultraviolet": {
+          "title": {
+            "en": "UV Index",
+            "de": "UV-Index"
+          }
+        },
+        "measure_luminance": {
+          "title": {
+            "en": "Light Intensity",
+            "de": "Lichtstärke"
+          }
+        },
+        "measure_temperature.pool": {
+          "title": {
+            "en": "Pool Temperature",
+            "de": "Pooltemperatur"
+          }
+        },
+        "wind_direction_text": {
+          "title": {
+            "en": "Wind Direction",
+            "de": "Windrichtung"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "access_id",
+          "type": "text",
+          "label": {
+            "en": "Tuya Access ID",
+            "de": "Tuya Access ID"
+          },
+          "hint": {
+            "en": "Access ID / Client ID from iot.tuya.com (Cloud → Your Project → Overview)",
+            "de": "Access ID / Client ID von iot.tuya.com (Cloud → Dein Projekt → Übersicht)"
+          },
+          "value": ""
+        },
+        {
+          "id": "access_secret",
+          "type": "password",
+          "label": {
+            "en": "Tuya Access Secret",
+            "de": "Tuya Access Secret"
+          },
+          "hint": {
+            "en": "Access Secret / Client Secret from iot.tuya.com",
+            "de": "Access Secret von iot.tuya.com"
+          },
+          "value": ""
+        },
+        {
+          "id": "device_id",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "de": "Geräte-ID"
+          },
+          "hint": {
+            "en": "Tuya Device ID (Cloud → Your Project → Devices → Device ID)",
+            "de": "Tuya-Geräte-ID (Cloud → Dein Projekt → Geräte → Geräte-ID)"
+          },
+          "value": ""
+        },
+        {
+          "id": "poll_interval",
+          "type": "number",
+          "label": {
+            "en": "Update interval (seconds)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "value": 30,
+          "attr": {
+            "min": 10,
+            "max": 300
+          }
+        },
+        {
+          "id": "temp_offset_indoor",
+          "type": "number",
+          "label": {
+            "en": "Indoor temperature offset (°C)",
+            "de": "Innentemperatur Korrektur (°C)"
+          },
+          "hint": {
+            "en": "Correction value e.g. 0.2 or -0.5",
+            "de": "Korrekturwert z.B. 0.2 oder -0.5"
+          },
+          "value": 0.2,
+          "attr": {
+            "min": -5,
+            "max": 5,
+            "step": 0.1
+          }
+        },
+        {
+          "id": "temp_offset_outdoor",
+          "type": "number",
+          "label": {
+            "en": "Outdoor temperature offset (°C)",
+            "de": "Außentemperatur Korrektur (°C)"
+          },
+          "hint": {
+            "en": "Correction value e.g. 0.2 or -0.5",
+            "de": "Korrekturwert z.B. 0.2 oder -0.5"
+          },
+          "value": 0,
+          "attr": {
+            "min": -5,
+            "max": 5,
+            "step": 0.1
+          }
+        }
+      ],
+      "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+      }
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "wind_speed_exceeded",
+        "title": {
+          "en": "Wind speed exceeded",
+          "de": "Windgeschwindigkeit überschritten"
+        },
+        "titleFormatted": {
+          "en": "Wind speed exceeded [[speed]] km/h",
+          "de": "Windgeschwindigkeit überschritt [[speed]] km/h"
+        },
+        "hint": {
+          "en": "Triggers when wind speed goes above the set threshold",
+          "de": "Wird ausgelöst, wenn die Windgeschwindigkeit den Schwellenwert überschreitet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vevor_yt60307"
+          },
+          {
+            "name": "speed",
+            "type": "number",
+            "placeholder": {
+              "en": "km/h",
+              "de": "km/h"
+            }
+          }
+        ]
+      },
+      {
+        "id": "rain_started",
+        "title": {
+          "en": "Rain started",
+          "de": "Regen hat begonnen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vevor_yt60307"
+          }
+        ]
+      },
+      {
+        "id": "uv_index_high",
+        "title": {
+          "en": "UV Index is high",
+          "de": "UV-Index ist hoch"
+        },
+        "titleFormatted": {
+          "en": "UV Index exceeded [[uv_index]]",
+          "de": "UV-Index überschritt [[uv_index]]"
+        },
+        "hint": {
+          "en": "Triggers when UV Index exceeds threshold (e.g. 6 = high risk)",
+          "de": "Wird ausgelöst wenn UV-Index den Schwellenwert überschreitet (z.B. 6 = hohes Risiko)"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vevor_yt60307"
+          },
+          {
+            "name": "uv_index",
+            "type": "number",
+            "placeholder": {
+              "en": "UV Index (e.g. 6)"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_raining",
+        "title": {
+          "en": "It !{{is|is not}} raining",
+          "de": "Es regnet !{{|nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vevor_yt60307"
+          }
+        ]
+      },
+      {
+        "id": "wind_speed_above",
+        "title": {
+          "en": "Wind speed !{{is|is not}} above",
+          "de": "Windgeschwindigkeit !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Wind speed !{{is|is not}} above [[speed]] km/h",
+          "de": "Windgeschwindigkeit !{{ist|ist nicht}} über [[speed]] km/h"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vevor_yt60307"
+          },
+          {
+            "name": "speed",
+            "type": "number",
+            "placeholder": {
+              "en": "km/h"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "wind_direction_text": {
+      "type": "string",
+      "title": {
+        "en": "Wind Direction",
+        "de": "Windrichtung"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icon.svg"
+    }
+  },
+  "tags": {
+    "en": [
+      "weather",
+      "temperature",
+      "humidity",
+      "wind",
+      "rain",
+      "vevor",
+      "tuya"
+    ],
+    "de": [
+      "wetter",
+      "temperatur",
+      "luftfeuchtigkeit",
+      "wind",
+      "regen",
+      "vevor",
+      "tuya"
+    ]
+  }
+}

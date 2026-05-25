@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "missing_settings": "Bitte IP-Adresse, Geräte-ID und Local Key in den Einstellungen eintragen.",
+    "connection_failed": "Verbindung zur Wetterstation fehlgeschlagen. Prüfe IP-Adresse und Netzwerk.",
+    "poll_failed": "Daten konnten nicht abgerufen werden. Wetterstation erreichbar?"
+  },
+  "pair": {
+    "title": "Vevor YT60307 verbinden",
+    "description": "Gib die lokale IP-Adresse und den Tuya Local Key deiner Wetterstation ein."
+  }
+}
