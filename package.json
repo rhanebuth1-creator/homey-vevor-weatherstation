@@ -1,0 +1,16 @@
+{
+  "name": "de.vevor.weatherstation",
+  "version": "1.0.0",
+  "description": "Vevor YT60307 Wetterstation für Homey Pro",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": ["homey", "weather", "vevor", "tuya"],
+  "author": "Homey User",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
