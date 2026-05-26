@@ -8,8 +8,8 @@
     "de": "Vevor Wetterstation"
   },
   "description": {
-    "en": "Integrate your Vevor YT60307 weather station into Homey. Get all sensor data including indoor/outdoor temperature, humidity, wind speed, wind direction, rainfall, pressure, UV index, light intensity and pool temperature.",
-    "de": "Integriere deine Vevor YT60307 Wetterstation in Homey. Alle Sensordaten verfügbar: Innen-/Außentemperatur, Luftfeuchtigkeit, Windgeschwindigkeit, Windrichtung, Niederschlag, Luftdruck, UV-Index, Lichtstärke und Pooltemperatur."
+    "en": "All your Vevor YT60307 weather station data in Homey.",
+    "de": "Alle Daten deiner Vevor YT60307 Wetterstation in Homey."
   },
   "category": [
     "climate"
@@ -385,5 +385,10 @@
       "tuya"
     ]
   },
-  "brandColor": "#1A4A7A"
+  "brandColor": "#1A4A7A",
+  "support": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation/issues",
+  "homepage": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation",
+  "bugs": {
+    "url": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation/issues"
+  }
 }

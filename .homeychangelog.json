@@ -1,0 +1,5 @@
+{
+  "1.0.0": {
+    "en": "Initial release. Integrate Vevor YT60307 weather station via Tuya Cloud API. Supports indoor/outdoor temperature, humidity, wind speed, wind direction, rainfall, pressure, UV index, light intensity and pool temperature."
+  }
+}
