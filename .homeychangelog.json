@@ -4,5 +4,11 @@
   },
   "1.0.1": {
     "en": "Fixed certification issues: updated readme, added support URL, new driver icon and images showing the weather station."
+  },
+  "1.0.2": {
+    "en": "Fixed driver icon, app icon and replaced driver images with real product photo."
+  },
+  "1.0.3": {
+    "en": "— Changelog: Fixed driver icon, app icon and replaced driver images with real product photo."
   }
 }
