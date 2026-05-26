@@ -12,16 +12,6 @@ FEATURES
 - Light intensity
 - Pool/channel temperature
 
-FLOW CARDS
-Triggers:
-- Wind speed exceeded (threshold)
-- Rain started
-- UV index is high (threshold)
-
-Conditions:
-- It is raining / it is not raining
-- Wind speed is above X km/h
-
 REQUIREMENTS
 - Vevor YT60307 weather station
 - Free Tuya Developer account (iot.tuya.com)
@@ -32,7 +22,3 @@ SETUP
 2. Create a Cloud project and link your Smart Life app account
 3. Note your Access ID, Access Secret and Device ID
 4. Add the device in Homey and enter the credentials in settings
-
-SUPPORT
-For help and questions, visit the Homey Community forum or open an issue on GitHub:
-https://github.com/rhanebuth1-creator/homey-vevor-weatherstation

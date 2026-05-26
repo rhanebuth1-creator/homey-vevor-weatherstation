@@ -7,7 +7,7 @@ const DPS_MAP = {
   'outdoor_humidity':    { capability: 'measure_humidity.outdoor',    factor: 1   },
   'wind_speed':          { capability: 'measure_wind_strength',       factor: 10  },
   'wind_gust':           { capability: 'measure_gust_strength',       factor: 10  },
-  'rainfall':            { capability: 'measure_rain',                factor: 1   },
+  'rainfall':            { capability: 'measure_rain',                factor: 10  },
   'indoor_pressure':     { capability: 'measure_pressure',            factor: 100 },
   'uvi':                 { capability: 'measure_ultraviolet',         factor: 1   },
   'light_intensity':     { capability: 'measure_luminance',           factor: 100 },
