@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "missing_settings": "Please enter Access ID, Access Secret and Device ID in settings.",
+    "connection_failed": "Connection to Tuya Cloud failed. Check Access ID and Secret.",
+    "poll_failed": "Could not fetch data. Check your internet connection."
+  },
+  "pair": {
+    "title": "Connect Vevor YT60307",
+    "description": "Enter your Tuya Access ID, Access Secret and Device ID."
+  }
+}

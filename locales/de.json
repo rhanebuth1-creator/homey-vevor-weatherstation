@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "missing_settings": "Bitte Access ID, Access Secret und Geräte-ID in den Einstellungen eintragen.",
+    "connection_failed": "Verbindung zur Tuya Cloud fehlgeschlagen. Access ID und Secret prüfen.",
+    "poll_failed": "Daten konnten nicht abgerufen werden. Internetverbindung prüfen."
+  },
+  "pair": {
+    "title": "Vevor YT60307 verbinden",
+    "description": "Gib deine Tuya Access ID, Access Secret und die Geräte-ID ein."
+  }
+}

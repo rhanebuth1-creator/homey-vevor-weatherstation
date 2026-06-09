@@ -1,0 +1,407 @@
+{
+  "id": "de.vevor.weatherstation",
+  "version": "2.0.0",
+  "compatibility": ">=12.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Vevor Weather Station",
+    "de": "Vevor Wetterstation"
+  },
+  "description": {
+    "en": "All your Vevor YT60307 weather station data in Homey.",
+    "de": "Alle Daten deiner Vevor YT60307 Wetterstation in Homey."
+  },
+  "category": ["climate"],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png"
+  },
+  "author": {
+    "name": "René Hanebuth",
+    "email": "rhanebuth1@gmail.com"
+  },
+  "brandColor": "#1A4A7A",
+  "support": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation/issues",
+  "homepage": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation",
+  "bugs": {
+    "url": "https://github.com/rhanebuth1-creator/homey-vevor-weatherstation/issues"
+  },
+  "tags": {
+    "en": ["weather", "temperature", "humidity", "wind", "rain", "vevor", "tuya"],
+    "de": ["wetter", "temperatur", "luftfeuchtigkeit", "wind", "regen", "vevor", "tuya"]
+  },
+  "drivers": [
+    {
+      "id": "vevor_yt60307",
+      "name": {
+        "en": "Vevor YT60307",
+        "de": "Vevor YT60307"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_temperature",
+        "measure_temperature.outdoor",
+        "measure_humidity",
+        "measure_humidity.outdoor",
+        "measure_wind_strength",
+        "measure_wind_angle",
+        "measure_rain",
+        "measure_rain_daily",
+        "measure_pressure",
+        "measure_ultraviolet",
+        "measure_luminance",
+        "measure_temperature.pool",
+        "alarm_battery"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": { "en": "Indoor Temperature", "de": "Innentemperatur" }
+        },
+        "measure_temperature.outdoor": {
+          "title": { "en": "Outdoor Temperature", "de": "Außentemperatur" }
+        },
+        "measure_humidity": {
+          "title": { "en": "Indoor Humidity", "de": "Innenluftfeuchtigkeit" }
+        },
+        "measure_humidity.outdoor": {
+          "title": { "en": "Outdoor Humidity", "de": "Außenluftfeuchtigkeit" }
+        },
+        "measure_wind_strength": {
+          "title": { "en": "Wind Speed", "de": "Windgeschwindigkeit" }
+        },
+        "measure_wind_angle": {
+          "title": { "en": "Wind Direction", "de": "Windrichtung" },
+          "units": { "en": "°" }
+        },
+        "measure_rain": {
+          "title": { "en": "Rainfall", "de": "Niederschlag" },
+          "units": { "en": "mm" }
+        },
+        "measure_rain_daily": {
+          "title": { "en": "Daily Rainfall", "de": "Tagesniederschlag" },
+          "units": { "en": "mm" }
+        },
+        "measure_pressure": {
+          "title": { "en": "Barometric Pressure", "de": "Luftdruck" }
+        },
+        "measure_ultraviolet": {
+          "title": { "en": "UV Index", "de": "UV-Index" }
+        },
+        "measure_luminance": {
+          "title": { "en": "Light Intensity", "de": "Lichtstärke" }
+        },
+        "measure_temperature.pool": {
+          "title": { "en": "Pool Temperature", "de": "Pooltemperatur" }
+        },
+        "alarm_battery": {
+          "title": { "en": "Outdoor Sensor Battery Low", "de": "Außensensor Batterie schwach" }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": { "next": "add_devices" }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "access_id",
+          "type": "text",
+          "label": { "en": "Tuya Access ID", "de": "Tuya Access ID" },
+          "hint": {
+            "en": "Access ID / Client ID from iot.tuya.com",
+            "de": "Access ID / Client ID von iot.tuya.com"
+          },
+          "value": ""
+        },
+        {
+          "id": "access_secret",
+          "type": "password",
+          "label": { "en": "Tuya Access Secret", "de": "Tuya Access Secret" },
+          "hint": {
+            "en": "Access Secret from iot.tuya.com",
+            "de": "Access Secret von iot.tuya.com"
+          },
+          "value": ""
+        },
+        {
+          "id": "device_id",
+          "type": "text",
+          "label": { "en": "Device ID", "de": "Geräte-ID" },
+          "hint": {
+            "en": "Tuya Device ID from iot.tuya.com",
+            "de": "Tuya-Geräte-ID aus iot.tuya.com"
+          },
+          "value": ""
+        },
+        {
+          "id": "poll_interval",
+          "type": "number",
+          "label": { "en": "Update interval (seconds)", "de": "Aktualisierungsintervall (Sekunden)" },
+          "value": 10,
+          "attr": { "min": 10, "max": 300 }
+        },
+        {
+          "id": "temp_offset_indoor",
+          "type": "number",
+          "label": { "en": "Indoor temperature offset (°C)", "de": "Innentemperatur Korrektur (°C)" },
+          "hint": {
+            "en": "Correction value e.g. 0.2 or -0.5",
+            "de": "Korrekturwert z.B. 0.2 oder -0.5"
+          },
+          "value": 0.2,
+          "attr": { "min": -5, "max": 5, "step": 0.1 }
+        },
+        {
+          "id": "temp_offset_outdoor",
+          "type": "number",
+          "label": { "en": "Outdoor temperature offset (°C)", "de": "Außentemperatur Korrektur (°C)" },
+          "hint": {
+            "en": "Correction value e.g. 0.2 or -0.5",
+            "de": "Korrekturwert z.B. 0.2 oder -0.5"
+          },
+          "value": 0,
+          "attr": { "min": -5, "max": 5, "step": 0.1 }
+        }
+      ],
+      "energy": {
+        "batteries": ["AA", "AA"]
+      },
+      "images": {
+        "small": "/drivers/vevor_yt60307/assets/images/small.png",
+        "large": "/drivers/vevor_yt60307/assets/images/large.png"
+      }
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "wind_speed_exceeded",
+        "title": { "en": "Wind speed exceeded", "de": "Windgeschwindigkeit überschritten" },
+        "titleFormatted": {
+          "en": "Wind speed exceeded [[speed]] km/h",
+          "de": "Windgeschwindigkeit überschritt [[speed]] km/h"
+        },
+        "hint": {
+          "en": "Triggers when wind speed goes above the set threshold",
+          "de": "Wird ausgelöst wenn die Windgeschwindigkeit den Schwellenwert überschreitet"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "speed", "type": "number", "placeholder": { "en": "km/h", "de": "km/h" } }
+        ]
+      },
+      {
+        "id": "rain_started",
+        "title": { "en": "Rain started", "de": "Regen hat begonnen" },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" }
+        ]
+      },
+      {
+        "id": "uv_index_high",
+        "title": { "en": "UV Index is high", "de": "UV-Index ist hoch" },
+        "titleFormatted": {
+          "en": "UV Index exceeded [[uv_index]]",
+          "de": "UV-Index überschritt [[uv_index]]"
+        },
+        "hint": {
+          "en": "Triggers when UV Index exceeds threshold (e.g. 6 = high risk)",
+          "de": "Wird ausgelöst wenn UV-Index den Schwellenwert überschreitet (z.B. 6 = hohes Risiko)"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "uv_index", "type": "number", "placeholder": { "en": "UV Index (e.g. 6)" } }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_raining",
+        "title": { "en": "It !{{is|is not}} raining", "de": "Es regnet !{{|nicht}}" },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" }
+        ]
+      },
+      {
+        "id": "wind_speed_above",
+        "title": {
+          "en": "Wind speed !{{is|is not}} above",
+          "de": "Windgeschwindigkeit !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Wind speed !{{is|is not}} above [[speed]] km/h",
+          "de": "Windgeschwindigkeit !{{ist|ist nicht}} über [[speed]] km/h"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "speed", "type": "number", "placeholder": { "en": "km/h" } }
+        ]
+      },
+      {
+        "id": "temperature_indoor_above",
+        "title": {
+          "en": "Indoor temperature !{{is|is not}} above",
+          "de": "Innentemperatur !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Indoor temperature !{{is|is not}} above [[temperature]] °C",
+          "de": "Innentemperatur !{{ist|ist nicht}} über [[temperature]] °C"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "temperature", "type": "number", "placeholder": { "en": "°C", "de": "°C" } }
+        ]
+      },
+      {
+        "id": "temperature_outdoor_above",
+        "title": {
+          "en": "Outdoor temperature !{{is|is not}} above",
+          "de": "Außentemperatur !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Outdoor temperature !{{is|is not}} above [[temperature]] °C",
+          "de": "Außentemperatur !{{ist|ist nicht}} über [[temperature]] °C"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "temperature", "type": "number", "placeholder": { "en": "°C", "de": "°C" } }
+        ]
+      },
+      {
+        "id": "humidity_indoor_above",
+        "title": {
+          "en": "Indoor humidity !{{is|is not}} above",
+          "de": "Innenluftfeuchtigkeit !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Indoor humidity !{{is|is not}} above [[humidity]] %",
+          "de": "Innenluftfeuchtigkeit !{{ist|ist nicht}} über [[humidity]] %"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "humidity", "type": "number", "placeholder": { "en": "%", "de": "%" } }
+        ]
+      },
+      {
+        "id": "humidity_outdoor_above",
+        "title": {
+          "en": "Outdoor humidity !{{is|is not}} above",
+          "de": "Außenluftfeuchtigkeit !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Outdoor humidity !{{is|is not}} above [[humidity]] %",
+          "de": "Außenluftfeuchtigkeit !{{ist|ist nicht}} über [[humidity]] %"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "humidity", "type": "number", "placeholder": { "en": "%", "de": "%" } }
+        ]
+      },
+      {
+        "id": "uv_index_above",
+        "title": {
+          "en": "UV Index !{{is|is not}} above",
+          "de": "UV-Index !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "UV Index !{{is|is not}} above [[uv_index]]",
+          "de": "UV-Index !{{ist|ist nicht}} über [[uv_index]]"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "uv_index", "type": "number", "placeholder": { "en": "UV Index" } }
+        ]
+      },
+      {
+        "id": "luminance_above",
+        "title": {
+          "en": "Light intensity !{{is|is not}} above",
+          "de": "Lichtstärke !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Light intensity !{{is|is not}} above [[luminance]] lux",
+          "de": "Lichtstärke !{{ist|ist nicht}} über [[luminance]] lux"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "luminance", "type": "number", "placeholder": { "en": "lux", "de": "lux" } }
+        ]
+      },
+      {
+        "id": "pressure_above",
+        "title": {
+          "en": "Air pressure !{{is|is not}} above",
+          "de": "Luftdruck !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Air pressure !{{is|is not}} above [[pressure]] hPa",
+          "de": "Luftdruck !{{ist|ist nicht}} über [[pressure]] hPa"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "pressure", "type": "number", "placeholder": { "en": "hPa", "de": "hPa" } }
+        ]
+      },
+      {
+        "id": "pressure_below",
+        "title": {
+          "en": "Air pressure !{{is|is not}} below",
+          "de": "Luftdruck !{{ist|ist nicht}} unter"
+        },
+        "titleFormatted": {
+          "en": "Air pressure !{{is|is not}} below [[pressure]] hPa",
+          "de": "Luftdruck !{{ist|ist nicht}} unter [[pressure]] hPa"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "pressure", "type": "number", "placeholder": { "en": "hPa", "de": "hPa" } }
+        ]
+      },
+      {
+        "id": "daily_rain_above",
+        "title": {
+          "en": "Daily rainfall !{{is|is not}} above",
+          "de": "Tagesniederschlag !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Daily rainfall !{{is|is not}} above [[rain]] mm",
+          "de": "Tagesniederschlag !{{ist|ist nicht}} über [[rain]] mm"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" },
+          { "name": "rain", "type": "number", "placeholder": { "en": "mm", "de": "mm" } }
+        ]
+      },
+      {
+        "id": "outdoor_battery_low",
+        "title": {
+          "en": "Outdoor sensor battery !{{is|is not}} low",
+          "de": "Außensensor Batterie !{{ist|ist nicht}} schwach"
+        },
+        "args": [
+          { "name": "device", "type": "device", "filter": "driver_id=vevor_yt60307" }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "measure_rain_daily": {
+      "type": "number",
+      "title": { "en": "Daily Rainfall", "de": "Tagesniederschlag" },
+      "units": { "en": "mm", "de": "mm" },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg",
+      "insights": true,
+      "decimals": 1
+    }
+  }
+}
