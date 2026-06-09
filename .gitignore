@@ -1,0 +1,10 @@
+node_modules/
+.homeybuild/
+
+# Entwicklungs-Skripte mit Zugangsdaten (nie pushen!)
+test-local.js
+test-listen.js
+test-heartbeat.js
+get-local-key.js
+get-device-info.js
+check-api-quota.js
