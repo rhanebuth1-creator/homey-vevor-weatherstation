@@ -1,0 +1,8 @@
+{
+  "2.0.1": {
+    "en": "Faster polling (10s), outdoor sensor battery alarm, 10 new Flow Conditions (temperature, humidity, UV, light, pressure, rain, battery), fixed daily rainfall overcounting"
+  },
+  "2.0.2": {
+    "en": "New app artwork and a dedicated driver icon, plus a cleaned-up store description."
+  }
+}
