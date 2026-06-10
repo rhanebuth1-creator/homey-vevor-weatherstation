@@ -4,5 +4,8 @@
   },
   "2.0.2": {
     "en": "New app artwork and a dedicated driver icon, plus a cleaned-up store description."
+  },
+  "2.0.3": {
+    "en": "Daily rainfall now matches the station display exactly (no more overcounting)."
   }
 }
