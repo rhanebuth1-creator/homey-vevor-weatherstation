@@ -10,27 +10,10 @@ class VevorDevice extends Homey.Device {
     this.log('Vevor YT60307 initialisiert:', this.getName());
     this._cloud = null;
     this._pollTimer = null;
-    this._midnightTimer = null;
     this._wasRaining = false;
-    this._lastRainValue = -1;
-
-    // Tagesniederschlag aus persistentem Speicher laden
-    this._dailyRain = this.getStoreValue('dailyRain') || 0;
-    const lastResetDate = this.getStoreValue('lastResetDate') || '';
-    const today = new Date().toDateString();
-
-    if (lastResetDate !== today) {
-      this._dailyRain = 0;
-      await this.setStoreValue('dailyRain', 0);
-      await this.setStoreValue('lastResetDate', today);
-      this.log('Neuer Tag - Tagesniederschlag zurückgesetzt');
-    }
-
-    this.log('Tagesniederschlag beim Start:', this._dailyRain, 'mm');
 
     await this._setupCloud();
     this._startPolling();
-    this._scheduleMidnightReset();
   }
 
   async _setupCloud(settings) {
@@ -58,22 +41,6 @@ class VevorDevice extends Homey.Device {
     if (this._pollTimer) { clearInterval(this._pollTimer); this._pollTimer = null; }
   }
 
-  _scheduleMidnightReset() {
-    if (this._midnightTimer) clearTimeout(this._midnightTimer);
-    const now = new Date();
-    const midnight = new Date(now);
-    midnight.setHours(24, 0, 0, 0);
-    this._midnightTimer = setTimeout(async () => {
-      this.log('Mitternacht - Tagesniederschlag zurückgesetzt');
-      this._dailyRain = 0;
-      this._lastRainValue = -1;
-      await this.setStoreValue('dailyRain', 0);
-      await this.setStoreValue('lastResetDate', new Date().toDateString());
-      this.setCapabilityValue('measure_rain_daily', 0).catch(() => {});
-      this._scheduleMidnightReset();
-    }, midnight - now);
-  }
-
   async _poll() {
     if (!this._cloud) return;
     try {
@@ -93,11 +60,16 @@ class VevorDevice extends Homey.Device {
 
     for (const [code, rawValue] of Object.entries(dps)) {
 
-      // Windrichtung aus outdoor_alert_display Buffer
+      // Windrichtung + Tagesniederschlag aus outdoor_alert_display Buffer
       if (code === 'outdoor_alert_display') {
         const decoded = decodeOutdoorDisplay(rawValue);
         if (decoded.windAngle !== undefined) {
           this.setCapabilityValue('measure_wind_angle', decoded.windAngle % 360).catch(() => {});
+        }
+        // Tagesniederschlag direkt von der Station übernehmen (wie Stationsdisplay)
+        if (decoded.rainDaily !== undefined) {
+          const daily = Math.round(decoded.rainDaily * 10) / 10;
+          this.setCapabilityValue('measure_rain_daily', daily).catch(() => {});
         }
         continue;
       }
@@ -109,27 +81,11 @@ class VevorDevice extends Homey.Device {
         continue;
       }
 
-      // Niederschlag separat (Tuya-Reset-Problem)
+      // Aktueller Niederschlag (Tagesniederschlag kommt aus outdoor_alert_display)
       if (code === 'rainfall') {
         const rainNow = Math.round(Number(rawValue) / 10 * 10) / 10;
 
         this.setCapabilityValue('measure_rain', rainNow).catch(() => {});
-
-        if (this._lastRainValue === -1) {
-          // Erster Wert nach Start: als Referenz setzen, nicht aufaddieren
-          this._lastRainValue = rainNow;
-          this.setCapabilityValue('measure_rain_daily', this._dailyRain).catch(() => {});
-        } else if (rainNow >= this._lastRainValue + 0.1) {
-          // Echter Zuwachs (mind. 0.1mm) → aufaddieren
-          this._dailyRain = Math.round((this._dailyRain + (rainNow - this._lastRainValue)) * 10) / 10;
-          this.setCapabilityValue('measure_rain_daily', this._dailyRain).catch(() => {});
-          this.setStoreValue('dailyRain', this._dailyRain).catch(() => {});
-          this._lastRainValue = rainNow;
-        } else if (rainNow < this._lastRainValue - 0.5) {
-          // Signifikante Abnahme (>0.5mm) → echter Tuya-Reset, neue Referenz setzen
-          this._lastRainValue = rainNow;
-        }
-        // Kleine Schwankungen (±0.5mm) ignorieren — kein Reset, kein Zuwachs
 
         const raining = rainNow > 0;
         if (raining && !this._wasRaining) {
@@ -169,7 +125,6 @@ class VevorDevice extends Homey.Device {
 
   async onDeleted() {
     this._stopPolling();
-    if (this._midnightTimer) clearTimeout(this._midnightTimer);
   }
 
 }
