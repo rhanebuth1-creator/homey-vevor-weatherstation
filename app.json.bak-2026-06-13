@@ -1,6 +1,6 @@
 {
   "id": "de.vevor.weatherstation",
-  "version": "2.0.4",
+  "version": "2.0.3",
   "compatibility": ">=12.0.0",
   "sdk": 3,
   "name": {
@@ -211,32 +211,6 @@
           "hint": {
             "en": "Tuya Device ID from iot.tuya.com",
             "de": "Tuya-Geräte-ID aus iot.tuya.com"
-          },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP address",
-            "de": "IP-Adresse"
-          },
-          "hint": {
-            "en": "Local IP of the station",
-            "de": "Lokale IP der Station"
-          },
-          "value": "192.168.178.36"
-        },
-        {
-          "id": "local_key",
-          "type": "password",
-          "label": {
-            "en": "Local Key",
-            "de": "Local Key"
-          },
-          "hint": {
-            "en": "16-char local key from Tuya",
-            "de": "16-stelliger Local Key aus Tuya"
           },
           "value": ""
         },
